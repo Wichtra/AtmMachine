@@ -17,7 +17,7 @@ public class Account extends  DataBase{
     }
 
     public void setbalance(int balance){
-        this.balance=balance;
+        this.balance = balance;
     }
     public int getbalance(){
         return balance;

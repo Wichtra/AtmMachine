@@ -4,8 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 public class DataBase {
-    static String name;
-    static String coose = "Choose what you want: ";
+    String name;
+    String coose = "Choose what you want: ";
     static int Pin;
     static String Username;
     int choose;
@@ -22,21 +22,23 @@ public class DataBase {
                 account.setUsername(input.next());
                 System.out.print("Set ur Pin: ");
                 account.setPassword(input.nextInt());
-            } catch (NumberFormatException ex) {
-                System.out.println("\nsorry for \"PIN\" you should use number");
-                mainPage();
+                end = false;
+            } catch (InputMismatchException ex) {
+                System.out.println("\nsorry for \"PIN\" you should use number\n");
+                input.next();
+                signUp();
             }
-            try {
-                for (int i = 0; i < name.length(); i++) {
-                    Thread.sleep(150);
-                    System.out.print(name.charAt(i));
-                    end = false;
-                }
-            } catch (InterruptedException ex) {
-                System.exit(0);
-            } finally {
-                System.out.println("\nDone");
+        }
+        try {
+            for (int i = 0; i < name.length(); i++) {
+                Thread.sleep(150);
+                System.out.print(name.charAt(i));
             }
+        } catch (InterruptedException ex) {
+            System.exit(0);
+        } finally {
+            System.out.println("\nDone");
+            mainPage();
         }
     }
     public void signIn() {
@@ -52,8 +54,11 @@ public class DataBase {
                     int Pin = input.nextInt();
                     checkAccount(Username, Pin);
                     end = false;
+                } catch (InputMismatchException e){
+                    System.out.println("\nSorry for PIN you should use number");
+                    input.nextInt();
                 } catch (Exception e) {
-                    checkAccount(null,0);
+                    checkAccount(null, 0);
                 }
             }
 
@@ -120,7 +125,15 @@ public class DataBase {
                     }
                     case 3 -> {
                         System.out.print("\nEnter amount of money: ");
-                        account.setbalance(input.nextInt());
+                        try {
+
+                            account.setbalance(input.nextInt());
+//                            end = false;
+                        }catch (InputMismatchException e){
+                            System.out.println("Your Money value is out of range");
+                            input.next();
+                        }
+
                     }
                     case 4 -> {
                         System.out.print("\nSet your new pin: ");
@@ -135,6 +148,7 @@ public class DataBase {
     }
 
     public void mainPage() {
+        Account account1= new Account("pol",980,0);
         boolean end = true;
         while (end) {
             try {
@@ -164,7 +178,7 @@ public class DataBase {
                         System.out.println("\nape luu");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("\nsWrong input");
+                System.out.println("\nWrong input");
                 input.next();
             }
         }
